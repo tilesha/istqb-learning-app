@@ -29,3 +29,4 @@ body{font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe
 @media(max-width:700px){.source-table{font-size:12px}.source-table th,.source-table td{padding:7px 8px}.source-table th:first-child{min-width:105px;max-width:160px}.question-diagram{padding:8px}}
 
 .header-questions{background:#eff6ff;border:1px solid #bfdbfe;border-radius:9px;color:var(--blue-dark);font-size:12px;font-weight:800;padding:7px 10px;white-space:nowrap}.header-questions[hidden]{display:none}
+.in-session .session-question-meta{position:sticky;top:0;z-index:20;background:var(--bg);padding:2px 0 8px}.in-session .question-head{margin-bottom:8px}.in-session .question-progress{margin-bottom:0}
