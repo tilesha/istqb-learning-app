@@ -2,6 +2,7 @@
 import {STORAGE_KEY,SESSION_MS,QUESTION_COUNT, normalizeState,freshState,questionStatus,getProgress,questionStatus as statusOf,applyMastery,shuffled,selectPractice,startSession,answerPractice,skipPractice,setExamAnswer,finishSession,stats,recommendation,unique} from './quiz-core.mjs';
 
 const $ = s => document.querySelector(s);
+document.addEventListener('dblclick',event=>event.preventDefault(),{passive:false});
 const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&quot;',"'":'&#39;'}[ch]));
 const proper=(n)=>String(n).padStart(2,'0');
 const mins=(ms)=>`${proper(Math.floor(Math.max(0,ms)/60000))}:${proper(Math.floor(Math.max(0,ms)%60000/1000))}`;
