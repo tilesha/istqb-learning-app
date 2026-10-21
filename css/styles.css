@@ -8,7 +8,7 @@ body.in-session{height:100vh;height:100dvh;overflow:hidden}.in-session .app-shel
 body{font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
 .nav-back[hidden]{display:none}
 .q-stem{font-size:18px;font-weight:600;line-height:1.75;letter-spacing:-.01em;margin:8px 0 24px;max-width:78ch}.answer-grid{gap:12px;margin:20px 0}.answer-choice{font-size:15px;font-weight:500;line-height:1.7;padding:15px 16px;gap:13px}.answer-choice .marker{margin-top:1px}.main-content.is-session .card{padding:26px}
-@media(max-width:700px){.question-head h2{font-size:18px}.q-stem{font-size:15px;line-height:1.7;margin:4px 0 18px}.answer-choice{font-size:14px;line-height:1.65;padding:13px 14px}.main-content.is-session .card{padding:16px}}
+@media(max-width:700px){.question-head h2{font-size:18px}.q-stem{font-size:15px;line-height:1.7;margin:4px 0 18px}.answer-grid{gap:8px;margin:14px 0}.answer-choice{font-size:14px;line-height:1.55;padding:10px 12px;gap:10px;border-radius:10px}.answer-choice .marker{width:24px;height:24px;min-width:24px;font-size:11px}.main-content.is-session .card{padding:16px}}
 @media(max-width:380px){.footer-feedback{max-width:65px}.question-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.grid-3{gap:5px}.stat{padding:12px 4px}.stat small{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 
