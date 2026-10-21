@@ -53,3 +53,6 @@ body.in-session .topbar-inner{min-height:50px;padding:0 18px}body.in-session .to
 
 /* Accessibility: allow browser pinch-to-zoom. */
 html{touch-action:pan-x pan-y pinch-zoom}
+
+/* Match the scroll end space to the compact footer without a long empty tail. */
+body.in-session .main-content.is-session>.session-scroll-area{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}@media(max-width:700px){body.in-session .main-content.is-session>.session-scroll-area{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:calc(66px + env(safe-area-inset-bottom,0px))}}
