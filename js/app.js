@@ -1,4 +1,4 @@
-if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2.0.2',{updateViaCache:'none'}).catch(()=>{}));
 'use strict';
 import {STORAGE_KEY,SESSION_MS,QUESTION_COUNT, normalizeState,freshState,questionStatus,getProgress,questionStatus as statusOf,applyMastery,shuffled,selectPractice,startSession,answerPractice,skipPractice,setExamAnswer,finishSession,stats,recommendation,unique} from './quiz-core.mjs';
 
