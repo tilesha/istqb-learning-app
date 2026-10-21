@@ -44,3 +44,6 @@ body.in-session .main-content.is-session{display:grid !important;grid-template-r
 
 /* Let the inner question pane shrink to the viewport and always reach its final answer. */
 body.in-session .app-shell{min-height:0}body.in-session .main-content.is-session{flex:1 1 0 !important;min-height:0 !important;height:0;max-height:100%;grid-template-rows:auto minmax(0,1fr)}body.in-session .main-content.is-session>.session-scroll-area{min-height:0 !important;height:auto !important;max-height:100%;padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+
+/* Compact session controls to prioritize question reading space. */
+body.in-session .main-content.is-session{padding-top:4px !important;padding-left:22px;padding-right:22px}body.in-session .main-content.is-session>.session-question-meta{padding:5px 0 6px}.in-session .question-head{margin-bottom:5px}.in-session .question-progress{height:6px}@media(max-width:700px){body.in-session .main-content.is-session{padding-top:2px !important;padding-left:14px;padding-right:14px}.in-session .session-question-meta{padding:4px 0 5px}}
