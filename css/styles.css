@@ -41,3 +41,6 @@ body{font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe
 
 /* Hard layout boundary: content is physically unable to enter the header row. */
 body.in-session .main-content.is-session{display:grid !important;grid-template-rows:auto minmax(0,1fr);align-content:stretch;overflow:hidden !important;padding-bottom:0 !important}body.in-session .main-content.is-session>.session-question-meta{grid-row:1;position:relative !important;top:auto !important;z-index:3;background:#f8fafc;isolation:isolate}body.in-session .main-content.is-session>.session-scroll-area{grid-row:2;position:relative;z-index:1;min-height:0;height:100%;overflow-y:auto !important;overflow-x:hidden !important;background:#f8fafc}
+
+/* Let the inner question pane shrink to the viewport and always reach its final answer. */
+body.in-session .app-shell{min-height:0}body.in-session .main-content.is-session{flex:1 1 0 !important;min-height:0 !important;height:0;max-height:100%;grid-template-rows:auto minmax(0,1fr)}body.in-session .main-content.is-session>.session-scroll-area{min-height:0 !important;height:auto !important;max-height:100%;padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
