@@ -30,3 +30,5 @@ body{font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe
 
 .header-questions{background:#eff6ff;border:1px solid #bfdbfe;border-radius:9px;color:var(--blue-dark);font-size:12px;font-weight:800;padding:7px 10px;white-space:nowrap}.header-questions[hidden]{display:none}
 .in-session .session-question-meta{position:sticky;top:0;z-index:20;background:var(--bg);padding:2px 0 8px}.in-session .question-head{margin-bottom:8px}.in-session .question-progress{margin-bottom:0}
+/* Keep fixed session controls fully opaque above scrolling question content. */
+.in-session .topbar{position:relative;z-index:100;background:#fff;isolation:isolate}.in-session .session-question-meta{background:#f8fafc;isolation:isolate;box-shadow:0 8px 12px -14px rgba(15,23,42,.55)}
