@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="Personal ISTQB CTFL v4.0.1 learning and mock exam practice with official sample papers and local progress tracking.">
+  <title>ISTQB CTFL | Learn, Practise &amp; Master</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=2.0.0">
+  <script type="module" src="js/app.js?v=2.0.0"></script>
+</head>
+<body>
+ <div class="app-shell">
+  <header class="topbar">
+   <div class="topbar-inner">
+    <button id="home-btn" class="nav-back" type="button" hidden aria-label="Return home" title="Home">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-7H9v7H3.5a.5.5 0 0 1-.5-.5v-9.7Z"/></svg>
+    </button>
+    <h1 id="page-title"><span class="desktop-title">ISTQB Foundation Learning</span><span class="mobile-title">ISTQB CTFL</span></h1>
+   </div>
+  </header>
+  <main id="main" class="main-content" aria-live="polite"><p class="muted">Loading official sample questions…</p></main>
+  <footer id="session-footer" class="session-footer" hidden>
+   <div class="footer-inner">
+    <div class="footer-timer" role="timer" aria-live="off"><span class="timer-icon" aria-hidden="true">◷</span><strong id="session-time">60:00</strong><small>remaining</small></div>
+    <div class="footer-feedback" id="footer-feedback" hidden><strong id="feedback-label"></strong><div id="auto-progress" class="auto-progress"><span></span></div></div>
+    <div class="footer-actions"><button id="pause-next" class="button-plain" type="button" hidden>Pause</button><button id="next-btn" class="button-primary" type="button">Next →</button></div>
+   </div>
+  </footer>
+  <dialog id="nav-dialog" class="popup" aria-labelledby="nav-title">
+   <div class="dialog-heading"><h2 id="nav-title">Navigate questions</h2><button class="icon-close" data-close-dialog="nav-dialog" type="button" aria-label="Close navigation">✕</button></div>
+   <p class="muted small" id="nav-hint">Tap a question number.</p><div id="question-grid" class="question-grid"></div>
+   <button id="end-session" class="button-secondary button-block" type="button">Submit session now</button>
+  </dialog>
+  <dialog id="confirm-dialog" class="popup confirm-popup" aria-labelledby="confirm-title"><h2 id="confirm-title">Confirm action</h2><p id="confirm-message"></p><div class="button-row"><button id="confirm-cancel" class="button-secondary" type="button">Cancel</button><button id="confirm-accept" class="button-danger" type="button">Confirm</button></div></dialog>
+  <dialog id="message-dialog" class="popup" aria-labelledby="message-title"><h2 id="message-title">Notice</h2><p id="message-text"></p><button class="button-primary button-block" data-close-dialog="message-dialog" type="button">Close</button></dialog>
+  <input id="import-progress" type="file" accept="application/json,.json" hidden>
+ </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+"""Browser smoke test with inline assets because network navigation is blocked in CI sandbox."""
+import re,json,base64,time
+from playwright.sync_api import sync_playwright
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+html=(ROOT/'index.html').read_text();html=re.sub(r'<script type="module"[^>]*></script>','',html);html=re.sub(r'<link rel="stylesheet"[^>]*>','',html)
+css=(ROOT/'css/styles.css').read_text()
+core=(ROOT/'js/quiz-core.mjs').read_text()
+app=(ROOT/'js/app.js').read_text().replace("from './quiz-core.mjs'", "from 'data:text/javascript;base64,"+base64.b64encode(core.encode()).decode()+"'")
+datasets={'data/questions.json':json.loads((ROOT/'data/questions.json').read_text()),'data/lessons.json':json.loads((ROOT/'data/lessons.json').read_text())}
+with sync_playwright() as p:
+ browser=p.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox'])
+ for width,height in [(390,844),(1440,900)]:
+  context=browser.new_context(viewport={'width':width,'height':height},accept_downloads=True)
+  page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.set_content(html,wait_until='load');page.add_style_tag(content=css)
+  page.evaluate('''(d) => { window.__localDatasets=d; window.fetch=async (url)=>({ok:true,json:async()=>window.__localDatasets[url]}) }''',datasets)
+  page.add_script_tag(type='module',content=app)
+  page.get_by_text('Smart Practice',exact=True).first.wait_for(timeout=20000)
+  print('Loaded',width,page.locator('main').inner_text()[:90])
+  page.screenshot(path=f'/mnt/data/istqb-learning-app-home-{width}.png',full_page=True)
+  assert page.locator('body').evaluate('(x)=>x.scrollWidth<=window.innerWidth+1')
+  page.get_by_text('Learn by Chapter',exact=True).first.click()
+  page.get_by_text('Seven testing principles').first.click()
+  page.get_by_role('button',name='☆ Bookmark note').first.click()
+  page.get_by_role('button',name='Review 5 flashcards').click()
+  page.locator('#flip-card').click()
+  page.get_by_role('button',name='Back to chapter notes').click()
+  page.locator('#home-btn').click()
+  page.get_by_text('Smart Practice',exact=True).first.click()
+  assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text()
+  assert page.locator('#session-time').inner_text().startswith('59:')
+  page.locator('.answer-choice').first.click()
+  page.get_by_role('button',name='Read answer explanation').click()
+  assert page.locator('#explanation-panel').is_visible()
+  time.sleep(5.3)
+  assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text(), 'should pause auto-next for explanations'
+  page.locator('#next-btn').click()
+  assert 'Question 2 / 40' in page.locator('.question-head h2').inner_text()
+  page.locator('#home-btn').click()
+  page.locator('#hero-btn').click()
+  assert 'Question 2 / 40' in page.locator('.question-head h2').inner_text()
+  page.locator('#home-btn').click()
+  page.get_by_role('button',name='Discard unfinished session').click()
+  page.locator('#confirm-accept').click()
+  page.get_by_text('Official Mock Exam',exact=True).first.click()
+  page.get_by_role('button',name='Sample Exam A').click()
+  page.locator('.answer-choice').first.click()
+  assert 'Answer saved.' in page.locator('main').inner_text()
+  page.locator('#open-questions').click()
+  page.locator('[data-jump="5"]').click()
+  assert 'Question 6 / 40' in page.locator('.question-head h2').inner_text()
+  assert page.locator('.answer-choice').count()==5
+  page.locator('.answer-choice').nth(0).click();page.locator('.answer-choice').nth(1).click()
+  assert 'Answer saved.' in page.locator('main').inner_text()
+  assert not errors,errors
+  assert page.locator('body').evaluate('(x)=>x.scrollWidth<=window.innerWidth+1')
+  page.screenshot(path=f'/mnt/data/istqb-learning-app-exam-{width}.png',full_page=True)
+  context.close()
+ browser.close()
+print('PASS: Embedded-asset browser smoke at mobile and desktop widths, modes, explanations, mastery, exam multi-select, zero JS runtime errors')
