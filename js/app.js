@@ -30,7 +30,7 @@ function questionVisual(q){
  if(v.type==='diagram')return `<figure class="question-diagram"><img loading="lazy" src="${esc(v.src)}" alt="${esc(v.alt)}"><figcaption>Diagram from the official sample question</figcaption></figure>`;
  return '';
 }
-function readableSourceText(s){return esc(s).replace(/\s+•\s+/g,'\n• ');}
+function readableSourceText(s){return esc(s).replace(/\s+\u2022\s+/g,'\n\u2022 ').replace(/\s+(?=(?:\d+|[ivxlcdm]+|[A-Z])\.\s)/gi,'\n');}
 function questionContent(q){
  return `<div class="q-stem">${readableSourceText(q.stemBefore??q.stem)}</div>${questionVisual(q)}${q.stemAfter?`<div class="q-stem stem-after">${readableSourceText(q.stemAfter)}</div>`:''}`;
 }
