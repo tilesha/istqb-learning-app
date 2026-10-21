@@ -33,8 +33,18 @@ function questionVisual(q){
  return '';
 }
 function readableSourceText(s){let text=esc(s);if(text.includes('The log from the test execution'))return text.replace(/\s+(?=(?:Environment configuration:|Test run ID:|Start |End |Total time|\d{2}:\d{2}:\d{2}\.\d{3} Execution of TC))/g,'\n').replace(/\s+(?=(?:Input|Output|Result):)/g,'\n').replace(/(Result: (?:passed|failed))\s+(?=\d{2}:\d{2}:\d{3}\.)/g,'$1\n').replace(/\s+(?=Which\b)/g,'\n\n');text=text.replace('Execution 1 Execution 2 Execution 3 TC1 (1) Failed (4) Passed (7) Passed TC2 (2) Passed (5) Failed (8) Passed TC3 (3) Failed (6) Failed (9) Passed','\n\nTest case | Execution 1 | Execution 2 | Execution 3\nTC1 | (1) Failed | (4) Passed | (7) Passed\nTC2 | (2) Passed | (5) Failed | (8) Passed\nTC3 | (3) Failed | (6) Failed | (9) Passed').replace('Test Priority (1 = higher priority) TC1 SEARCH for product A 4 TC2 SEARCH for product B 4 TC3 VIEW product A details 3 TC4 VIEW product B details 2 TC5 ADD product A to a shopping cart 3 TC6 ADD product B to a shopping cart 1 TC7 place an ORDER 5','Test priority (1 = highest)\n\nTC1 | SEARCH for product A | 4\nTC2 | SEARCH for product B | 4\nTC3 | VIEW product A details | 3\nTC4 | VIEW product B details | 2\nTC5 | ADD product A to a shopping cart | 3\nTC6 | ADD product B to a shopping cart | 1\nTC7 | place an ORDER | 5');return text.replace(/\s+\u2022\s*/g,'\n\u2022 ').replace(/\s+o\s+(?=[A-Z])/g,'\n  ? ').replace(/\s+(?=(?:\d+|[ivxlcdm]+|[A-D])\.\s)/gi,'\n').replace(/\s+(?=(?:TC\d+\s*\(|TC\d+\s+(?=[A-Za-z])|Execution\s+\d+|Test Priority|Variable:|Acceptance criteria:|And the following|In all test cases|You also identified|Tests are repeated|Decision table describing|The form has|Each test has|A test input|Which|What|How|Based ONLY|Given that))/g,'\n\n').replace(/products A and\nB\. Product/g,'products A and B. Product');}
+function studyStem(text,role='auto'){
+ const source=readableSourceText(text);
+ if(role==='task')return `<div class="q-stem q-task"><span class="task-label">Question</span>${source}</div>`;
+ if(role==='context')return `<div class="q-stem q-context">${source}</div>`;
+ const markers=[...source.matchAll(/(?:^|\n\n)(?=(?:Which|What|How|Based ONLY|Given that)\b)/g)];
+ if(!markers.length)return `<div class="q-stem q-task">${source}</div>`;
+ const marker=markers[markers.length-1],start=marker.index+(marker[0].startsWith('\n')?2:0);
+ return `<div class="q-stem q-context">${source.slice(0,start).trim()}</div><div class="q-stem q-task"><span class="task-label">Question</span>${source.slice(start).trim()}</div>`;
+}
 function questionContent(q){
- return `<div class="q-stem">${readableSourceText(q.stemBefore??q.stem)}</div>${questionVisual(q)}${q.stemAfter?`<div class="q-stem stem-after">${readableSourceText(q.stemAfter)}</div>`:''}`;
+ const before=q.stemBefore??q.stem;
+ return `${studyStem(before,q.stemAfter?'context':'auto')}${questionVisual(q)}${q.stemAfter?studyStem(q.stemAfter,'task'):''}`;
 }
 function statusLabel(s){return ({mastered:'Mastered',review:'Need Review',learning:'Learning',unseen:'Unseen'})[s]||s;}
 function chapterBars(chapters){return chapters.map(c=>{const pct=c.accuracy??0;return `<div class="chapter-row"><div><button data-chapter="${c.chapter}" aria-label="Study Chapter ${c.chapter}">Chapter ${c.chapter} · ${esc(titleCh(c.chapter))}</button><div class="bar ${pct<50?'red':pct>=75?'green':''}"><span style="width:${pct}%"></span></div></div><div class="score">${c.accuracy===null?'Not studied':`${pct}% accuracy`}<br><span class="tiny">${c.mastered}/${c.questions} mastered</span></div></div>`}).join('');}
