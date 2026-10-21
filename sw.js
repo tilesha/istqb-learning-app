@@ -18,6 +18,11 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // App pages always come from the network so a deployment is never hidden by a stale browser cache.
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request, { cache: 'no-store' }));
+    return;
+  }
   if (event.request.method !== 'GET' || !event.request.url.includes('/assets/diagrams/')) return;
   event.respondWith(caches.open(CACHE_NAME).then(async cache => {
     const cached = await cache.match(event.request);
