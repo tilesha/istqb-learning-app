@@ -31,10 +31,7 @@ with sync_playwright() as p:
   assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text()
   assert page.locator('#session-time').inner_text().startswith('59:')
   page.locator('.answer-choice').first.click()
-  page.get_by_role('button',name='Read answer explanation').click()
-  assert page.locator('#explanation-panel').is_visible()
-  time.sleep(5.3)
-  assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text(), 'should pause auto-next for explanations'
+  assert page.locator('#next-btn').is_visible(), 'Next should remain available after a background-scored answer'
   page.locator('#next-btn').click()
   assert 'Question 2 / 40' in page.locator('.question-head h2').inner_text()
   page.locator('#home-btn').click()

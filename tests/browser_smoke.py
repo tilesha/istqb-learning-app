@@ -27,13 +27,9 @@ try:
    assert page.locator('#session-time').inner_text().startswith('59:')
    assert page.locator('.answer-choice').count()>=4
    page.locator('.answer-choice').first.click()
-   page.get_by_role('button',name='Read answer explanation').click()
-   assert page.locator('#explanation-panel').is_visible()
-   time.sleep(5.3)
-   assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text(),'auto next should pause'
+   assert page.locator('#next-btn').is_visible(),'Next should remain available after a background-scored answer'
    page.reload(wait_until='networkidle')
-   assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text(),'should preserve session while paused'
-   assert page.locator('#pause-next').is_hidden(),'paused auto next should stay paused'
+   assert 'Question 1 / 40' in page.locator('.question-head h2').inner_text(),'should preserve the saved answer'
    page.locator('#next-btn').click()
    assert 'Question 2 / 40' in page.locator('.question-head h2').inner_text()
    # Exit to home; resume with time and question order
