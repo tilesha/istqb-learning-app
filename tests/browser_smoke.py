@@ -51,7 +51,7 @@ try:
    # Answer first then navigate through question grid
    page.locator('.answer-choice').first.click()
    assert 'Answer saved.' in page.locator('main').inner_text()
-   page.locator('#open-questions').click()
+   page.locator('#questions-btn').click()
    page.locator('[data-jump="5"]').click()
    assert 'Question 6 / 40' in page.locator('.question-head h2').inner_text()
    assert page.locator('.answer-choice').count()==5

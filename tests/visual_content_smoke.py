@@ -25,7 +25,7 @@ with sync_playwright() as p:
     page.get_by_role('button',name='Discard unfinished session').click();page.locator('#confirm-accept').click()
    page.get_by_text('Official Mock Exam',exact=True).first.click()
    page.get_by_role('button',name=f'Sample Exam {setid}').click()
-   page.locator('#open-questions').click();page.locator(f'[data-jump="{index}"]').click()
+   page.locator('#questions-btn').click();page.locator(f'[data-jump="{index}"]').click()
    if expected=='table':
     assert page.locator('.source-table').count()==1,(setid,index)
     assert page.locator('.source-table tbody tr').count()>2
