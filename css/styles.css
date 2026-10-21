@@ -38,3 +38,6 @@ body{font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe
 
 /* The session header is outside the question scroller: it cannot overlap question text. */
 .in-session .main-content.is-session{display:flex;flex-direction:column;overflow:hidden;padding-bottom:0}.in-session .session-question-meta{position:relative;top:auto;z-index:1;flex:0 0 auto;background:#f8fafc;padding:14px 0 10px;box-shadow:none}.in-session .session-scroll-area{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:8px 0 104px;scrollbar-gutter:stable}.in-session .session-scroll-area .card{margin-bottom:0}
+
+/* Hard layout boundary: content is physically unable to enter the header row. */
+body.in-session .main-content.is-session{display:grid !important;grid-template-rows:auto minmax(0,1fr);align-content:stretch;overflow:hidden !important;padding-bottom:0 !important}body.in-session .main-content.is-session>.session-question-meta{grid-row:1;position:relative !important;top:auto !important;z-index:3;background:#f8fafc;isolation:isolate}body.in-session .main-content.is-session>.session-scroll-area{grid-row:2;position:relative;z-index:1;min-height:0;height:100%;overflow-y:auto !important;overflow-x:hidden !important;background:#f8fafc}
